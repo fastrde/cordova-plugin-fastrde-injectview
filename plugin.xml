@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="de.fastr.phonegap.plugins.injectView" version="0.1.3">
+	<name>InjectView</name>
+	<author>Fabian Strachanski</author>
+	<description>Injects cordova and Plugins in the view. Nice when you load Remote Websites</description>
+	<license>MIT</license>
+	<keywords>inject, cordova, javascript</keywords>
+	<repo>https://github.com/fastrde/phonegap-plugin-injectView.git</repo>
+	<issue>https://github.com/fastrde/phonegap-plugin-injectView/issues</issue>
+	<js-module src="www/inject.js" name="inject">
+		<clobbers target="inject" />
+	</js-module>
+	<platform name="android">
+		<source-file src="src/android/Inject.java" target-dir="src/de/fastr/phonegap/plugins" />
+		<source-file src="src/android/engine/Injecter.java" target-dir="src/de/fastr/phonegap/plugins" />
+		<source-file src="src/android/engine/InjectWebView.java" target-dir="src/de/fastr/phonegap/plugins" />
+    <source-file src="src/android/engine/InjectWebViewClient.java" target-dir="src/de/fastr/phonegap/plugins" />
+		<source-file src="src/android/engine/InjectWebViewEngine.java" target-dir="src/de/fastr/phonegap/plugins" />
+
+ 		<config-file target="res/xml/config.xml" parent="/*">
+      <preference name="webView" value="de.fastr.phonegap.plugins.InjectWebViewEngine"/>
+			<feature name="Inject">
+				<param name="android-package" value="de.fastr.phonegap.plugins.Inject"/>
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+	</platform>
+	<platform name="ios">
+		<header-file src="src/ios/CDVInject.h" />
+		<source-file src="src/ios/CDVInject.m" />
+		<header-file src="src/ios/CDVInjectWebViewDelegate.h" />
+		<source-file src="src/ios/CDVInjectWebViewDelegate.m" />
+		<config-file target="config.xml" parent="/*">
+			<feature name="Inject">
+				<param name="ios-package" value="Inject" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+	</platform>
+</plugin>
