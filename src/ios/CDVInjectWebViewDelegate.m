@@ -44,7 +44,7 @@
         
         [self injectJavascriptFile:@"www/cordova" intoWebView:theWebView];
         [self injectJavascriptFile:@"www/cordova_plugins" intoWebView:theWebView];
-        [self injectJavascriptFile:@"www/plugins/de.fastr.phonegap.plugins.injectView/www/inject"  intoWebView:theWebView];
+        //[self injectJavascriptFile:@"www/plugins/de.fastr.phonegap.plugins.injectView/www/inject"  intoWebView:theWebView];
         
         for (NSDictionary* pluginParameters in pluginObjects) {
             NSString* file = pluginParameters[@"file"];
@@ -53,6 +53,7 @@
             path = [path stringByDeletingPathExtension];
             [self injectJavascriptFile:path intoWebView:theWebView];
         }
+        [self injectJavascriptFile:@"www/js/index" intoWebView:theWebView];
 
     }
 }

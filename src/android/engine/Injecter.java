@@ -55,7 +55,7 @@ public class Injecter {
         //callbackContext.success(script);
     }
 
-    public void injectJavascriptFile(String scriptFile){
+    public void _injectJavascriptFile(String scriptFile){
         Context context=this.cordova.getActivity().getApplicationContext();
         AssetManager assetManager = context.getAssets();
         try {
@@ -69,6 +69,36 @@ public class Injecter {
         //callbackContext.success(scriptFile);
         //callbackContext.error("Expected one non-empty string argument.");
     }
+
+		public void injectJavascriptFile(String scriptFile){
+       	Context context=this.cordova.getActivity().getApplicationContext();
+       	AssetManager assetManager = context.getAssets();
+        InputStream input;
+        try {
+          input = context.getAssets().open(scriptFile+".js");
+          byte[] buffer = new byte[input.available()];
+          input.read(buffer);
+          input.close();
+
+             // String-ify the script byte-array using BASE64 encoding !!!
+             String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
+             this.webView.loadUrl("javascript:(function() {" +
+                     "if (document.getElementById('file_"+scriptFile+"') == null) {" +
+                          "var parent = document.getElementsByTagName('head').item(0);" +
+                          "var script = document.createElement('script');" +
+                          "script.id = 'file_"+scriptFile+"';" +
+                          "script.type = 'text/javascript';" +
+             // Tell the browser to BASE64-decode the string into your script !!!
+                          "script.innerHTML = window.atob('" + encoded + "');" +
+                          "parent.appendChild(script);" +
+                     "}" +
+                          "})()");
+          } catch (IOException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+          }
+		
+		}
 
 
     public void parseCordovaPlugins(){

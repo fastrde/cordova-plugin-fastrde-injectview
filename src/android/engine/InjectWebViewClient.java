@@ -34,5 +34,6 @@ public class InjectWebViewClient extends SystemWebViewClient{
         //Injecter.getInstance().injectJavascriptFile("www/plugins/de.fastr.phonegap.plugins.injectView/www/inject");
         Injecter.getInstance().parseCordovaPlugins();
         //TODO: Hier das automatische laden einbauen
+        Injecter.getInstance().injectJavascriptFile("www/js/index");
     }
 }
