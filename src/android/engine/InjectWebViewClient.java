@@ -13,8 +13,6 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 import java.io.IOException;
 import java.io.InputStream;
 
-import io.cordova.hellocordova.R;
-
 /**
  * Created by fabian on 21.05.15.
  */
