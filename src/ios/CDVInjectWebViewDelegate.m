@@ -27,15 +27,26 @@
     NSString *substring = nil;
     [scanner scanUpToString:@"];" intoString:&substring];
     substring = [NSString stringWithFormat:@"%@]", substring];
-
+    
     NSError* localError;
     NSData* data = [substring dataUsingEncoding:NSUTF8StringEncoding];
     NSArray* pluginObjects = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
     return pluginObjects;
 }
-
+/*
+ * This function is a viewcontroller function and get not called here
+ * Copy & Paste this function to MainViewController.m
+ */
+/*
+ - (void)viewDidLayoutSubviews {
+ NSLog(@"viewDidLayoutSubviews");
+ NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+ [nc postNotificationName:@"InjectViewDidLayoutSubviews" object:self];
+ }
+ */
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
+    NSLog(@"webViewDidFinishLoad");
     [super webViewDidFinishLoad:theWebView];
     if (--self.webViewLoads == 0){
         NSArray* pluginObjects = [self parseCordovaPlugins];
@@ -54,19 +65,29 @@
             [self injectJavascriptFile:path intoWebView:theWebView];
         }
         [self injectJavascriptFile:@"www/js/index" intoWebView:theWebView];
-
     }
+    NSDictionary *userInfo = @{@"webView" : theWebView};
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"InjectWebViewDidFinishLoad" object:self userInfo:userInfo];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
+    NSLog(@"webViewDidStartLoad");
     [super webViewDidStartLoad:webView];
     self.webViewLoads++;
+    NSDictionary *userInfo = @{@"webView" : webView};
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"InjectWebViewDidStartLoad" object:self userInfo:userInfo];
 }
 
 
 - (void)webView:(UIWebView*)webView didFailLoadWithError:(NSError*)error {
+    NSLog(@"didFailLoadWithError");
     [super webView:webView didFailLoadWithError:error];
     self.webViewLoads--;
+    NSDictionary *userInfo = @{@"error" : error};
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"InjectDidFailLoadWithError" object:self userInfo:userInfo];
+    
 }
 @end
-
