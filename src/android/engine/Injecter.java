@@ -50,6 +50,13 @@ public class Injecter {
         this.cordova = cordova;
     }
 
+		public String getCookies(String domain){
+			return this.client.getCookies(domain);
+		}
+		public String getCookie(String domain, String name){
+			return this.client.getCookie(domain, name);
+		}
+
     public void injectJavascriptString(String script){
         this.webView.loadUrl("javascript: " + script);
         //callbackContext.success(script);

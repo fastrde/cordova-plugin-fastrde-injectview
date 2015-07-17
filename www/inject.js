@@ -13,6 +13,16 @@ var inject = {
 		success = success || function (){ };
 		error   = error   || function (){ };
 		cordova.exec(success, error, "Inject", "javascriptString", [script]);
+	},
+	getCookies: function(cookieDomain, success, error){
+		success = success || function (){ };
+		error   = error   || function (){ };
+		cordova.exec(success, error, "Inject", "getCookies", [cookieDomain]);
+	},
+	getCookie: function(cookieDomain, cookieName, success, error){
+		success = success || function (){ };
+		error   = error   || function (){ };
+		cordova.exec(success, error, "Inject", "getCookie", [cookieDomain, cookieName]);
 	}
 }
 

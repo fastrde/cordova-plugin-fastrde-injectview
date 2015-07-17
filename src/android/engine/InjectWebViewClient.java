@@ -1,17 +1,11 @@
 package de.fastr.phonegap.plugins;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.engine.SystemWebViewClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by fabian on 21.05.15.
@@ -23,7 +17,29 @@ public class InjectWebViewClient extends SystemWebViewClient{
         Injecter.getInstance().setViewClient(this);
         Log.w("inject", "InjectWebViewClient");
     }
+		public String getCookies(String siteName){
+        String CookieValue = null;
 
+        CookieManager cookieManager = CookieManager.getInstance();
+        String cookies = cookieManager.getCookie(siteName);
+				return cookies;
+		}
+
+    public String getCookie(String siteName,String CookieName){
+        String CookieValue = null;
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        String cookies = cookieManager.getCookie(siteName);
+        String[] temp=cookies.split(";");
+        for (String ar1 : temp ){
+            if(ar1.contains(CookieName)){
+                String[] temp1=ar1.split("=");
+                CookieValue = temp1[1];
+            }
+        }
+        return CookieValue;
+    }
+    
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);

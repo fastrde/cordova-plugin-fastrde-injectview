@@ -38,7 +38,6 @@
 
         @Override
         public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-            Log.w("aaabbb", "exec");
             if (action.equals("javascriptFile")){
                 String script = args.getString(0);
                 Injecter.getInstance().injectJavascriptFile(script);
@@ -46,6 +45,24 @@
             }else if (action.equals("javascriptString")){
                 String script = args.getString(0);
                 Injecter.getInstance().injectJavascriptString(script);
+            }else if (action.equals("getCookies")){
+                String domain = args.getString(0);
+								JSONObject json = new JSONObject();
+                String value = Injecter.getInstance().getCookies(domain);
+	
+								json.put("domain", domain);
+								json.put("cookies", value); 
+								callbackContext.success(json);
+            }else if (action.equals("getCookie")){
+                String domain = args.getString(0);
+                String name = args.getString(1);
+								JSONObject json = new JSONObject();
+                String value = Injecter.getInstance().getCookie(domain, name);
+
+								json.put("domain", domain);
+								json.put("name", name);
+								json.put("value", value); 
+								callbackContext.success(json);
             }
             return false;
         }
