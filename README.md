@@ -1,4 +1,7 @@
 # phonegap-plugin-injectView
+
+**Not maintained. Use at your own risk.**
+
 Injects Cordova and Plugins directly into the View.
 
 ## install
