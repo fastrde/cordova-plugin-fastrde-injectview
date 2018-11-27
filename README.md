@@ -1,6 +1,6 @@
-# phonegap-plugin-injectView
+## Not maintained anymore
 
-**Not maintained. Use at your own risk.**
+# phonegap-plugin-injectView
 
 Injects Cordova and Plugins directly into the View.
 
